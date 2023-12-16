@@ -2,13 +2,16 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
+import { createTheme, ThemeProvider } from '@mui/material';
+
+const theme = createTheme({});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* "Mount" this app under the /inbox URL pathname. All routes and links
-        are relative to this name. */}
-    <BrowserRouter basename="/">
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter basename="/">
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
