@@ -15,28 +15,32 @@ import { useTheme } from '@mui/styles';
 import useStyles from './styles';
 import { useGetGenresQuery } from '../../app/services/TMDB';
 import genreIcons from '../../assets/genres';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGenreOrCategory } from '../features/currentGenresOrCategory';
 const logo =
   'https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png';
 const Sidebar = ({ setMobileOpen }) => {
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+  const dispatch = useDispatch();
   const { data, isFetching } = useGetGenresQuery();
-
   console.log(data);
-
   const classes = useStyles();
   const theme = useTheme();
 
   const demoCategories = [
     {
       label: 'Popular',
-      value: 'comedy',
+      value: 'popular',
     },
     {
       label: 'Top Rated',
-      value: 'action',
+      value: 'top_rated',
     },
     {
       label: 'Upcoming',
-      value: 'horror',
+      value: 'upcoming',
     },
   ];
   return (
@@ -51,7 +55,10 @@ const Sidebar = ({ setMobileOpen }) => {
         {demoCategories.map(({ label, value }, index) => {
           return (
             <Link to="/" className={classes.links} key={value}>
-              <ListItemButton onClick={() => {}} button>
+              <ListItemButton
+                onClick={() => dispatch(selectGenreOrCategory(value))}
+                button
+              >
                 <ListItemIcon>
                   <img
                     src={genreIcons?.[label.toLowerCase()]}
@@ -73,10 +80,13 @@ const Sidebar = ({ setMobileOpen }) => {
             <CircularProgress size="4rem" />
           </Box>
         ) : (
-          data.genres.map(({ name, id }, index) => {
+          data?.genres?.map(({ name, id }, index) => {
             return (
               <Link to="/" className={classes.links} key={id}>
-                <ListItemButton onClick={() => {}} button>
+                <ListItemButton
+                  onClick={() => dispatch(selectGenreOrCategory(id))}
+                  button
+                >
                   <ListItemIcon>
                     <img
                       src={genreIcons?.[name.toLowerCase()]}
