@@ -17,14 +17,7 @@ const App = () => {
           mounted at. They can just assume they are mounted at /. Then, if they
           are moved under a different basename later on, all routes and links will
           continue to work. */}
-          <Route
-            path="/movie/:id"
-            element={
-              <h1>
-                <MovieInformation />
-              </h1>
-            }
-          ></Route>
+          <Route path="/movie/:id" element={<MovieInformation />}></Route>
           <Route exact path="/actors/:id" element={<Actors />}></Route>
           <Route path="/" element={<Movies />}></Route>
           <Route path="/profile/:id" element={<Profile />}></Route>
